@@ -8,7 +8,9 @@
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11.31",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
+        "skiadra/make-service-repository": "dev-main",
         "tymon/jwt-auth": "^2.1"
     },
     "require-dev": {
@@ -68,5 +70,11 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": {
+        "make-service-repository": {
+            "type": "vcs",
+            "url": "https://github.com/Skiadra/make-service-repository.git"
+        }
+    }
 }

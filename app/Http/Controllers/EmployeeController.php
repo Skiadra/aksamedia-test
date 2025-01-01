@@ -10,12 +10,10 @@ use App\Repositories\Employee\EmployeeRepositoryInterface;
 class EmployeeController extends Controller
 {
     protected $employeeRepository;
-    protected $firebaseStorage;
 
     public function __construct(EmployeeRepositoryInterface $employeeRepository)
     {
         $this->employeeRepository = $employeeRepository;
-        $this->firebaseStorage = app('firebase');
     }
 
     public function getAllEmployees(Request $request)
@@ -56,23 +54,16 @@ class EmployeeController extends Controller
                 'position' => 'string|required'
             ]);
 
-            // Upload the image to firebase
-            $file = $request->file('image');
+            if ($request->hasFile('image') && $request->file('image')->isValid()) {
+                // Generate a unique name for the image
+                $imageName = time() . '.' . $request->image->extension();
 
-            $bucket = $this->firebaseStorage->getBucket();
-            $bucketName = $bucket->name();
-            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+                // Store the image in the public/images directory
+                $request->image->move(public_path('images'), $imageName);
 
-            $object = $bucket->upload(fopen($file->getRealPath(), 'r'), [
-                'name' => $fileName
-            ]);
-
-            $object->update(
-                ['acl' => []],
-                ['predefinedAcl' => 'PUBLICREAD']
-            );
-
-            $input['image'] = "https://storage.googleapis.com/{$bucketName}/{$fileName}";
+                // Add the image name to the input data
+                $input['image'] = 'images/' . $imageName;  // Store the relative path
+            }
 
             // Create employee
             $employee = $this->employeeRepository->create($input);
@@ -108,25 +99,32 @@ class EmployeeController extends Controller
                 'position' => 'string|required'
             ]);
 
-            if ($request->hasFile('image')) { // Upload the image to firebase
-                $file = $request->file('image');
+            // Retrieve the employee by ID
+            $employee = $this->employeeRepository->getById($employee_id);
 
-                $bucket = $this->firebaseStorage->getBucket();
-                $bucketName = $bucket->name();
-                $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
-
-                $object = $bucket->upload(fopen($file->getRealPath(), 'r'), [
-                    'name' => $fileName
-                ]);
-
-                $object->update(
-                    ['acl' => []],
-                    ['predefinedAcl' => 'PUBLICREAD']
-                );
-
-                $input['image'] = "https://storage.googleapis.com/{$bucketName}/{$fileName}";
+            if (!$employee) {
+                return response()->json([
+                    'status' => 'Failed',
+                    'message' => 'Employee not found'
+                ], 404);
             }
 
+            // Check if a new image is uploaded
+            if ($request->hasFile('image') && $request->file('image')->isValid()) {
+                // Delete the old image if it exists
+                if (file_exists(public_path($employee->image))) {
+                    unlink(public_path($employee->image)); // Delete the old image file
+                }
+
+                // Generate a new image name
+                $imageName = time() . '.' . $request->image->extension();
+
+                // Store the new image in the public/images directory
+                $request->image->move(public_path('images'), $imageName);
+
+                // Update the input with the new image path
+                $input['image'] = 'images/' . $imageName;  // Store the relative path
+            }
 
             $employee = $this->employeeRepository->update($employee_id, $input);
 

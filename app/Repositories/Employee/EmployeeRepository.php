@@ -33,6 +33,17 @@ class EmployeeRepository implements EmployeeRepositoryInterface
     }
 
     /**
+     * Get employee by id.
+     *
+     * @param string|null
+     * @return Employee
+     */
+    public function getById(string $id)
+    {
+        return Employee::findOrFail($id);
+    }
+
+    /**
      * Create a new Employee record.
      *
      * @param array $data
@@ -47,7 +58,7 @@ class EmployeeRepository implements EmployeeRepositoryInterface
             return $employee;
         } catch (\Exception $e) {
             DB::rollBack();
-            throw new \Exception('Failed to create employee' . $e->getMessage());
+            throw new \Exception('Failed to create employee');
         }
     }
 

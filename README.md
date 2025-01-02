@@ -14,4 +14,5 @@ Comprehensive API documentation for this project is available through Postman. Y
 ## Technologies Used:
 - Laravel
 - MySQL
+
 This project leverages the Laravel framework for efficient backend development and MySQL for robust database management.

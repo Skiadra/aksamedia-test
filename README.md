@@ -27,7 +27,6 @@ Install dependencies:
 ```
 composer install
 ```
-Set up environment:
 
 Copy .env.example to .env:
 ```
@@ -39,10 +38,18 @@ php artisan key:generate
 ```
 Configure database credentials in the .env file.
 ```
-
+DB_CONNECTION=mysql
+DB_HOST=
+DB_PORT=
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
 ```
 Run migrations and seed the database:
 ```
 php artisan migrate --seed
 ```
 Serve the application:
+```
+php artisan serve
+```

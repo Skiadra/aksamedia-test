@@ -16,3 +16,33 @@ Comprehensive API documentation for this project is available through Postman. Y
 - MySQL
 
 This project leverages the Laravel framework for efficient backend development and MySQL for robust database management.
+
+## Getting Started
+Clone the repository:
+```
+git clone 
+cd aksamedia-test
+```
+Install dependencies:
+```
+composer install
+```
+Set up environment:
+
+Copy .env.example to .env:
+```
+cp .env.example .env
+```
+Generate app key
+```
+php artisan key:generate
+```
+Configure database credentials in the .env file.
+```
+
+```
+Run migrations and seed the database:
+```
+php artisan migrate --seed
+```
+Serve the application:

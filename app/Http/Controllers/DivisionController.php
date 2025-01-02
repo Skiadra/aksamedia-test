@@ -25,7 +25,7 @@ class DivisionController extends Controller
 
             return response()->json([
                 'status' => 'Success',
-                'message' => 'Divisions rretrieved',
+                'message' => 'Divisions retrieved',
                 'data' => [
                     'divisions' => $divisions,
                 ],

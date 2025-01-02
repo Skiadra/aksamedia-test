@@ -21,14 +21,13 @@ This project leverages the Laravel framework for efficient backend development a
 ## Getting Started
 Clone the repository:
 ```
-git clone 
+git clone https://github.com/Skiadra/aksamedia-test.git
 cd aksamedia-test
 ```
 Install dependencies:
 ```
 composer install
 ```
-
 Copy .env.example to .env:
 ```
 cp .env.example .env

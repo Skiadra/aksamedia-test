@@ -10,6 +10,7 @@ The database relation diagram outlines the structure and relationships of the ta
 ## Documentation:
 Comprehensive API documentation for this project is available through Postman. You can access it here:
 [Aksamedia Test API Documentation](https://www.postman.com/material-observer-66373835/aksamedia-test/documentation/i66hkcw/aksamedia-test)
+[Aksamedia Test API POSTMAN COLECTION](https://www.postman.com/material-observer-66373835/aksamedia-test/collection/i66hkcw/aksamedia-test)
 
 ## Technologies Used:
 - Laravel
